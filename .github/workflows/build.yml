@@ -83,11 +83,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password:  ${{ secrets.GITHUB_TOKEN }}
+      - run: ls -lahR
       - name: "Build and push"
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64
           push: true
+          context: .
           tags: ghcr.io/kotlinby/awesome-kotlin:main-beta
       - name: "Deploy Readme"
         uses: peaceiris/actions-gh-pages@v3
