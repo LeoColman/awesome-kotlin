@@ -58,7 +58,6 @@ jobs:
           path: "readme/"
           retention-days: 1
   build-and-push-image:
-    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     needs: build
     steps:
