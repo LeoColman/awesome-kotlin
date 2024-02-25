@@ -31,6 +31,11 @@ jobs:
           distribution: "liberica"
       - uses: gradle/actions/setup-gradle@v3
       - run: ./gradlew check installDist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "Backend Application"
+          path: "app-backend/build/install/"
+          retention-days: 1
       - name: "Generate data for frontend"
         run: ./build/install/awesome-kotlin/bin/awesome-kotlin
         env:
@@ -60,6 +65,10 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
         with:
+          name: "Backend Application"
+          path: "app-backend/build/install/"
+      - uses: actions/download-artifact@v4
+        with:
           name: "Frontend Application"
           path: "app-frontend/dist/"
       - uses: actions/download-artifact@v4
@@ -80,8 +89,7 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          context: app-frontend
-          tags: ghcr.io/kotlinby/awesome-kotlin:main
+          tags: ghcr.io/kotlinby/awesome-kotlin:main-beta
       - name: "Deploy Readme"
         uses: peaceiris/actions-gh-pages@v3
         with:

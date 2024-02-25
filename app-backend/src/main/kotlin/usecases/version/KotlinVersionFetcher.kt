@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper
 import io.ktor.client.HttpClient
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Fetch latest kotlin versions from maven central.
@@ -13,6 +14,18 @@ import io.ktor.client.statement.bodyAsText
  */
 interface KotlinVersionFetcher {
     suspend fun getLatestVersions(branches: List<String>): List<String>
+}
+
+class CachedVersionFetcher(
+    private val kotlinVersionFetcher: KotlinVersionFetcher,
+) : KotlinVersionFetcher {
+    private val cache = ConcurrentHashMap<List<String>, List<String>>(1)
+
+    override suspend fun getLatestVersions(branches: List<String>): List<String> {
+        return cache.getOrPut(branches) {
+            kotlinVersionFetcher.getLatestVersions(branches)
+        }
+    }
 }
 
 class MavenCentralKotlinVersionFetcher(

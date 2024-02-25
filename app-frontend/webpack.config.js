@@ -73,9 +73,6 @@ Build started with following configuration:
       }]
     },
     plugins: createListOfPlugins({NODE_ENV}, APP_DIR),
-    devServer: {
-      historyApiFallback: true
-    }
   }
 };
 

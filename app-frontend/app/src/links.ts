@@ -1,9 +1,8 @@
 import {Category, Links, LinkState} from "./model";
 
-const data: Links = (require("../links.json") as Links).map(sortLinks);
-export const kugs: Links = data.filter(it => it.name == "Kotlin User Groups")
-export const all: Links = data.filter(it => it.name != "Kotlin User Groups")
-export const awesome: Links = all.map(awesomeLinks)
+export const kugs: (Links) => Links = (data) => data.filter(it => it.name == "Kotlin User Groups").map(sortLinks)
+export const all: (Links) => Links = (data) => data.filter(it => it.name != "Kotlin User Groups").map(sortLinks)
+export const awesome: (Links) => Links = (data) => data.map(awesomeLinks)
   .filter(category => category.subcategories.length > 0)
   .map(sortLinks);
 

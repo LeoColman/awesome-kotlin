@@ -4,6 +4,7 @@ import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
 import io.ktor.server.cio.*
 import io.ktor.server.engine.*
+import io.ktor.server.http.content.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.serialization.Serializable
@@ -16,9 +17,11 @@ import usecases.github.GithubModule
 import usecases.kug.KugModule
 import usecases.links.LinksModule
 import usecases.ping.PingModule
+import usecases.rss.RssModule
 import usecases.signup.JwtModule
 import usecases.signup.LoginModule
 import usecases.signup.RegisterModule
+import usecases.version.KotlinVersionModule
 import utils.withEach
 import kotlin.time.Duration
 
@@ -33,6 +36,8 @@ open class ServerModule(
     private val metricsModule: MetricsModule,
     private val lifecycleModule: LifecycleModule,
     private val configModule: ConfigModule,
+    private val rssModule: RssModule,
+    private val kotlinVersionModule: KotlinVersionModule,
 ) {
     open val unauthenticatedRoutes by bean {
         listOf(
@@ -47,6 +52,11 @@ open class ServerModule(
             linksModule.route.get,
             kugModule.getKugRoute.get,
             kugModule.updateKugsRoute.get,
+
+            rssModule.rssRoute.get,
+            rssModule.fullRssRoute.get,
+
+            kotlinVersionModule.route.get,
         )
     }
 
@@ -66,6 +76,10 @@ open class ServerModule(
             defaults(jwtConfig)
 
             routing {
+                singlePageApplication {
+                    react(serverConfig.reactDistPath)
+                }
+
                 unauthenticatedRoutes.withEach {
                     install()
                 }
@@ -100,5 +114,6 @@ open class ServerModule(
         val port: Int,
         val host: String,
         val gracefulShutdownTimeout: Duration,
+        val reactDistPath: String,
     )
 }

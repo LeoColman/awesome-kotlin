@@ -5,9 +5,11 @@ import usecases.github.GithubModule
 import usecases.kug.KugModule
 import usecases.links.LinksModule
 import usecases.ping.PingModule
+import usecases.rss.RssModule
 import usecases.signup.JwtModule
 import usecases.signup.LoginModule
 import usecases.signup.RegisterModule
+import usecases.version.KotlinVersionModule
 import utils.close
 import utils.logger
 import java.lang.management.ManagementFactory
@@ -27,6 +29,10 @@ open class ApplicationFactory : AutoCloseable {
 
     open val yamlModule by lazy {
         YamlModule()
+    }
+
+    open val xmlModule by lazy {
+        XmlModule()
     }
 
     open val configModule by lazy {
@@ -101,6 +107,17 @@ open class ApplicationFactory : AutoCloseable {
         MetricsModule()
     }
 
+    open val rssModule by lazy {
+        RssModule()
+    }
+
+    open val kotlinVersionModule by lazy {
+        KotlinVersionModule(
+            xmlModule = xmlModule,
+            httpClientModule = httpClientModule,
+        )
+    }
+
     open val serverModule by lazy {
         ServerModule(
             githubModule = githubModule,
@@ -113,6 +130,8 @@ open class ApplicationFactory : AutoCloseable {
             metricsModule = metricsModule,
             lifecycleModule = lifecycleModule,
             configModule = configModule,
+            rssModule = rssModule,
+            kotlinVersionModule = kotlinVersionModule,
         )
     }
 

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Header} from "../head/head";
 import {Search} from "../search/search";
 import {Category} from "../category/category";
@@ -7,8 +7,6 @@ import {Bar} from "../bar/bar";
 import {Links} from "../../model";
 import {Navigation} from "../navigation/Navigation";
 import "./page_wrapper.less";
-
-const versions = require("../../../versions.json");
 
 function reduceCategory(category, searchTerm) {
   const subcategories = category.subcategories.reduce(function (acc, subcategory) {
@@ -68,7 +66,11 @@ function filterData(categories: Links, value) {
 }
 
 export function LinksPageComponent(props: PageProps) {
-  const [data, setData] = useState(props.displayLinks);
+  const [data, setData] = useState(() => props.displayLinks);
+
+  useEffect(() => {
+    setData(props.displayLinks);
+  }, [props.displayLinks]);
 
   function onSearchValueChanged(value: string) {
     if (value) {
@@ -104,7 +106,7 @@ export function LinksPageComponent(props: PageProps) {
 
       <Search onChange={onSearchValueChanged}/>
 
-      <Bar versions={versions}/>
+      <Bar versions={props.versions}/>
 
       {data.map((category, i) => {
         return <Category category={category} key={i}/>;
@@ -117,6 +119,7 @@ export function LinksPageComponent(props: PageProps) {
 interface PageProps {
   readonly displayLinks: Links;
   readonly searchLinks: Links;
+  readonly versions: string[];
 }
 
 function toLower(string) {

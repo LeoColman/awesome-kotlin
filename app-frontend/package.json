@@ -28,13 +28,12 @@
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.90.2",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.2"
+    "webpack-cli": "^5.1.4"
   },
   "scripts": {
     "prestart": "yarn install",
     "prebuild": "yarn install",
-    "start": "webpack serve --mode development --env NODE_ENV=development --env SOURCE_MAP=eval-source-map",
+    "start": "webpack watch --mode development --env NODE_ENV=development --env SOURCE_MAP=eval-source-map",
     "build": "webpack --mode production --env NODE_ENV=production --env SOURCE_MAP=source-map"
   },
   "repository": {
@@ -50,5 +49,5 @@
     "url": "https://github.com/KotlinBy/awesome-kotlin/issues"
   },
   "homepage": "https://github.com/KotlinBy/awesome-kotlin#readme",
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.1.0"
 }
