@@ -1,6 +1,7 @@
+package config
+
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigFactory
-import config.dotenv
 import di.bean
 
 open class ConfigModule {

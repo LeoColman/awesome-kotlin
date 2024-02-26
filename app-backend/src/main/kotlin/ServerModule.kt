@@ -1,3 +1,4 @@
+import config.ConfigModule
 import di.bean
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -12,6 +13,7 @@ import kotlinx.serialization.hocon.Hocon
 import kotlinx.serialization.hocon.decodeFromConfig
 import ktor.KtorFeaturesModule
 import ktor.plugins.configureSockets
+import lifecycle.LifecycleModule
 import metrics.MetricsModule
 import usecases.github.GithubModule
 import usecases.kug.KugModule

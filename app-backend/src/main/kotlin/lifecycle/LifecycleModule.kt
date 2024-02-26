@@ -1,7 +1,6 @@
+package lifecycle
+
 import di.bean
-import lifecycle.GracefulShutdown
-import lifecycle.JvmShutdownManager
-import lifecycle.ShutdownManager
 
 open class LifecycleModule {
     open val shutdownHandler by bean<ShutdownManager> {

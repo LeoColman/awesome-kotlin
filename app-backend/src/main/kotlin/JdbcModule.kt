@@ -1,5 +1,6 @@
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import config.ConfigModule
 import di.bean
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.hocon.Hocon

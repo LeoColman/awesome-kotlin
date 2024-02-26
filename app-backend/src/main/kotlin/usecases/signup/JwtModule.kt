@@ -1,6 +1,6 @@
 package usecases.signup
 
-import ConfigModule
+import config.ConfigModule
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import di.Bean1

@@ -1,7 +1,9 @@
 @file:JvmName("Application")
 
+import config.ConfigModule
 import di.bean
 import ktor.KtorFeaturesModule
+import lifecycle.LifecycleModule
 import metrics.MetricsModule
 import usecases.github.GithubModule
 import usecases.kug.KugModule

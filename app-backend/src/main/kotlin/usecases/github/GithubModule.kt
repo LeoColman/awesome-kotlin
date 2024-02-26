@@ -1,6 +1,6 @@
 package usecases.github
 
-import ConfigModule
+import config.ConfigModule
 import HttpClientModule
 import di.bean
 import kotlinx.serialization.hocon.Hocon
