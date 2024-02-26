@@ -1,10 +1,12 @@
 @file:JvmName("Application")
 
 import di.bean
+import ktor.KtorFeaturesModule
+import metrics.MetricsModule
 import usecases.github.GithubModule
 import usecases.kug.KugModule
 import usecases.links.LinksModule
-import usecases.ping.PingModule
+import usecases.healthcheck.HealthcheckModule
 import usecases.rss.RssModule
 import usecases.signup.JwtModule
 import usecases.signup.LoginModule
@@ -95,8 +97,8 @@ open class ApplicationFactory : AutoCloseable {
         )
     }
 
-    open val pingModule by lazy {
-        PingModule()
+    open val healthcheckModule by lazy {
+        HealthcheckModule()
     }
 
     open val linksModule by lazy {
@@ -104,7 +106,9 @@ open class ApplicationFactory : AutoCloseable {
     }
 
     open val metricsModule by lazy {
-        MetricsModule()
+        MetricsModule(
+            jdbcModule = jdbcModule,
+        )
     }
 
     open val rssModule by lazy {
@@ -118,21 +122,27 @@ open class ApplicationFactory : AutoCloseable {
         )
     }
 
+    open val ktorFeaturesModule by lazy {
+        KtorFeaturesModule(
+            jwtModule = jwtModule,
+            metricsModule = metricsModule,
+        )
+    }
+
     open val serverModule by lazy {
         ServerModule(
             githubModule = githubModule,
-            pingModule = pingModule,
+            healthcheckModule = healthcheckModule,
             loginModule = loginModule,
             registerModule = registerModule,
             linksModule = linksModule,
             kugModule = kugModule,
-            jwtModule = jwtModule,
             metricsModule = metricsModule,
             lifecycleModule = lifecycleModule,
             configModule = configModule,
             rssModule = rssModule,
             kotlinVersionModule = kotlinVersionModule,
-            jdbcModule = jdbcModule,
+            ktorFeaturesModule = ktorFeaturesModule,
         )
     }
 

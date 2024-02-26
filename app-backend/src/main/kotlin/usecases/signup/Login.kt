@@ -11,7 +11,7 @@ import io.ktor.server.routing.Routing
 import io.ktor.server.routing.post
 import kotlinx.serialization.Serializable
 import ktor.KtorRoute
-import ktor.plugins.AuthenticationException
+import ktor.features.AuthenticationException
 import kotlin.time.Duration.Companion.days
 
 open class LoginModule(
