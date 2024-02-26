@@ -132,6 +132,7 @@ open class ApplicationFactory : AutoCloseable {
             configModule = configModule,
             rssModule = rssModule,
             kotlinVersionModule = kotlinVersionModule,
+            jdbcModule = jdbcModule,
         )
     }
 

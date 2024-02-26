@@ -38,6 +38,7 @@ open class ServerModule(
     private val configModule: ConfigModule,
     private val rssModule: RssModule,
     private val kotlinVersionModule: KotlinVersionModule,
+    private val jdbcModule: JdbcModule,
 ) {
     open val unauthenticatedRoutes by bean {
         listOf(
@@ -67,6 +68,7 @@ open class ServerModule(
         val jwtConfig = jwtModule.jwtConfig.get
         val serverConfig = serverConfig.get
         val meterRegistry = metricsModule.meterRegistry.get
+        val datasource = jdbcModule.dataSource.get
 
         embeddedServer(
             factory = CIO,
@@ -94,7 +96,7 @@ open class ServerModule(
                 }
             }
             configureSockets()
-            configureMonitoring(meterRegistry)
+            configureMonitoring(meterRegistry, datasource)
         }.also { server ->
             lifecycleModule.shutdownHandler.get.addHandler {
                 server.stop(
