@@ -31,19 +31,15 @@ jobs:
           distribution: "liberica"
       - uses: gradle/actions/setup-gradle@v3
       - run: ./gradlew check installDist
-      - uses: actions/upload-artifact@v4
-        with:
-          name: "Backend Application"
-          path: "app-backend/build/install/"
-          retention-days: 1
       - name: "Generate data for frontend"
         run: ./build/install/awesome-kotlin/bin/awesome-kotlin
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
+      - run: ./gradlew installDist
       - uses: actions/upload-artifact@v4
         with:
-          name: "Generated Links"
-          path: "app-backend/src/main/resources/links/"
+          name: "Backend Application"
+          path: "app-backend/build/install/"
           retention-days: 1
       - uses: actions/setup-node@v4
         with:
@@ -71,10 +67,6 @@ jobs:
         with:
           name: "Backend Application"
           path: "app-backend/build/install/"
-      - uses: actions/download-artifact@v4
-        with:
-          name: "Generated Links"
-          path: "app-backend/src/main/resources/links/"
       - uses: actions/download-artifact@v4
         with:
           name: "Frontend Application"
