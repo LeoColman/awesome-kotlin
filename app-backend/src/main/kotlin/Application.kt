@@ -13,6 +13,7 @@ import usecases.rss.RssModule
 import usecases.signup.JwtModule
 import usecases.signup.LoginModule
 import usecases.signup.RegisterModule
+import usecases.stars_job.StarsJobModule
 import usecases.version.KotlinVersionModule
 import utils.close
 import utils.logger
@@ -51,6 +52,12 @@ open class ApplicationFactory : AutoCloseable {
 
     open val lifecycleModule by lazy {
         LifecycleModule()
+    }
+
+    open val starsJobModule by lazy {
+        StarsJobModule(
+            lifecycleModule = lifecycleModule,
+        )
     }
 
     open val jwtModule by lazy {
@@ -150,6 +157,7 @@ open class ApplicationFactory : AutoCloseable {
 
     open suspend fun run() {
         val gracefulShutdown = lifecycleModule.gracefulShutdown.get
+        starsJobModule.starsJobScheduler.get.start()
         lifecycleModule.shutdownHandler.get.registerHook()
         flywayModule.flyway.get.migrate()
         serverModule.ktorServer.get.start(wait = false)
