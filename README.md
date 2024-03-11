@@ -714,6 +714,7 @@ Here is the awesome badge for your project:
 * [rsocket/rsocket-kotlin](https://rsocket.io) - Kotlin implementation of RSocket.
 * [Dynamium/EVCalc](https://github.com/Dynamium/EVCalc) - EVCalc is a calculation engine for mobile electric venicles (Electric scooters, electric unicycles, and so on) written in Kotlin.
 * [agcom/knio2](https://github.com/agcom/knio2) - Kotlinx coroutines extensions for Java NIO.2
+* [sksamuel/aedile](https://github.com/sksamuel/aedile) - Kotlin Wrapper for [Caffeine](https://github.com/ben-manes/caffeine) caching library
 
 ### <a name="libraries-frameworks-api-clients"></a>API Clients <sup>[Back ⇈](#libraries-frameworks-api-clients-subcategory)</sup>
 * [jillesvangurp/kt-search](https://github.com/jillesvangurp/kt-search) - Kotlin multiplatform library for Elasticsearch and Opensearch
